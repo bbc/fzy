@@ -5,7 +5,7 @@ A tool which interactively displays YAML files and provides fuzzy interactive
 searching and filtering, loosely inspired by
 [`fzf`](https://github.com/junegunn/fzf).
 
-![fzy demo](https://raw.githubusercontent.com/bbc/fzy/refs/heads/main/docs/demo.gif)
+![fzy demo](docs/demo.gif)
 
 Usage
 -----
