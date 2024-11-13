@@ -1,0 +1,68 @@
+---
+# An example YAML file for playing with in fzy
+
+users:
+  ajohnson:
+    full-name: "Alice Johnson"
+    email: "alice.johnson@example.com"
+    phone: "020 7123 4567"
+    public_key: |
+      -----BEGIN PGP PUBLIC KEY BLOCK-----
+      
+      mQENBFqzjfsBCACxYZvUlqN3/WiZtnRRnlfY+ZW6t9G5bgVhvn1gyB1P8Eg4P4H7
+      vU5m5D67jxl6dbE9EJsQGg8klWX4ZbXEF/fHY9bJ9Yz4hG3alj8L1X5sw31fC3V5
+      Qx/Z7OAiZIgC97O97hQjMNPzUb5xWbVgOdhUkfOY6E8A8xXxUBgUuGZ7
+      =pQY1
+      -----END PGP PUBLIC KEY BLOCK-----
+
+  bsmith:
+    full-name: "Bob Smith"
+    email: "bob.smith@example.com"
+    phone: "020 7123 8901"
+    public_key: |
+      -----BEGIN PGP PUBLIC KEY BLOCK-----
+      
+      mQENBFqzk9kBCACqOarTi89FQPOe+VWZfsv6g+QNH39scDfbFTb+4RYEy3BcN2Jt
+      C5xYXk9Lgt0T0P3sd1gvzU1IQhRdsq2RehK8kQyZG72hoOG0h5DnLknLqT/Ss8yN
+      Wv3oqnFP2wH0fBg0N8Wc0mqhHRj5YctFJYnys0YFgSyw0c2Pb1b8qfpz
+      =GzW2
+      -----END PGP PUBLIC KEY BLOCK-----
+
+  cbrown:
+    full-name: "Charlie Brown"
+    email: "charlie.brown@example.com"
+    phone: "020 7654 3210"
+    public_key: |
+      -----BEGIN PGP PUBLIC KEY BLOCK-----
+      
+      mQENBFqzldwBCADJbf8hC3o8lWznxY+HEEJX6p/Q60c/OjovGpVlC7tQyk4CimMO
+      GTZlkg3rfFKnNcG5BmP4qEz6i+Fu7HgLPa9wTYQHdTbeyVkLzcdZgX9P6Ke5/pxl
+      zFwvDTdcpl6iCk5USkmqkP+1bYZskWmV7aBLcH8RkWiKNHgoUR09f9az
+      =QoY4
+      -----END PGP PUBLIC KEY BLOCK-----
+
+  dwhite:
+    full-name: "Dana White"
+    email: "dana.white@example.com"
+    phone: "020 7987 6543"
+    public_key: |
+      -----BEGIN PGP PUBLIC KEY BLOCK-----
+      
+      mQENBFqzntkBCADa0nqlMFy8ybFvk6fTYjzdUGxA2KBo6lWfTvPUx7E3Hj1aFTGt
+      g5b83shNMTtkMQ9RZjPE1NsB0Mdu82nI/o1PZLiME9lvI3cvHTGcsyQoOosmhK5F
+      j8QuwRQ7olQRrAHPK4g3L3y7SgMY/FB7TA7fPQ== 
+      =9Qp9
+      -----END PGP PUBLIC KEY BLOCK-----
+
+  egreen:
+    full-name: "Evan Green"
+    email: "evan.green@example.com"
+    phone: "020 7123 9876"
+    public_key: |
+      -----BEGIN PGP PUBLIC KEY BLOCK-----
+      
+      mQENBFqz9wYBCADG5YxMZZLZcFzj4vTr5jRovGfNhflXtPSxKzFbGF5OYFwNtn0p
+      uBLhJxMjz2JkpDGiQ3lz7Kg2L9Xck5W2poSt4XjEBtFKnpBlzG7sYsQmWi5yD7Gn
+      J5PLofqBcTwfgm3XGr3z9tlFzcdEf+AKbAlLg5cFSYLo2DUtb4B+1QLY
+      =Hw72
+      -----END PGP PUBLIC KEY BLOCK-----
