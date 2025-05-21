@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "fzy"
 description = "A tool which interactively displays YAML files and provides fuzzy interactive searching and filtering."
 readme = "README.md"
-license = {file= "LICENSE"}
+license-files = ["LICENSE"]
 dependencies = [
     "urwid>=2.5.0",
     "pygments",
