@@ -45,6 +45,17 @@ def main() -> None:
         """,
     )
     parser.add_argument(
+        "--no-split-multiline-strings",
+        "-S",
+        action="store_true",
+        default=False,
+        help="""
+            If given, don't split multi-line strings when the search matches
+            lines within the string. (Tip: add a trailing space to your filter
+            string to temporarily force this behaviour).
+        """,
+    )
+    parser.add_argument(
         "--non-interactive",
         "-I",
         action="store_true",
@@ -73,11 +84,17 @@ def main() -> None:
             args.yaml.read(),
             args.query,
             args.case_sensitive,
+            not args.no_split_multiline_strings,
             exit_on_enter=args.print_matched,
         )
     else:
         matching = [
-            fuzzy_filter(document, args.query, args.case_sensitive)
+            fuzzy_filter(
+                document,
+                args.query,
+                args.case_sensitive,
+                not args.no_split_multiline_strings,
+            )
             for document in yaml.safe_load_all(args.yaml.read())
         ]
 

@@ -33,7 +33,18 @@ def test_path_to_string(path: list[str | int], exp: str) -> None:
     [
         # Atomic values
         (None, [("", None)]),
-        ("foo", [("", "foo")]),
+        (123, [("", 123)]),
+        # Strings
+        ("foo", [("", "foo"), ("[0]", "foo")]),
+        (
+            "foo\nbar\nbaz",
+            [
+                ("", "foo\nbar\nbaz"),
+                ("[0]", "foo\n"),
+                ("[1]", "bar\n"),
+                ("[2]", "baz"),
+            ],
+        ),
         # Lists
         ([], [("", "[]")]),
         (
@@ -101,8 +112,18 @@ def test_iter_flat(obj: Any, exp: list[tuple[str, Any]]) -> None:
                     "baz": 456,
                     "qux": 789,
                 },
+                "quo": "one\ntwo\nthree\nfour",
             },
         ),
+        # String
+        ({"'quo'"}, {"quo": "one\ntwo\nthree\nfour"}),
+        # Line in string
+        ({"'quo'[0]"}, {"quo": "one\n⋯\n"}),
+        ({"'quo'[1]"}, {"quo": "⋯\ntwo\n⋯\n"}),
+        ({"'quo'[3]"}, {"quo": "⋯\nfour"}),
+        # Multiple lines in string
+        ({"'quo'[0]", "'quo'[3]"}, {"quo": "one\n⋯\nfour"}),
+        ({"'quo'[0]", "'quo'[1]", "'quo'[3]"}, {"quo": "one\ntwo\n⋯\nfour"}),
     ],
 )
 def test_filter_matching_paths(paths: set[str], exp: Any) -> None:
@@ -114,6 +135,7 @@ def test_filter_matching_paths(paths: set[str], exp: Any) -> None:
                     "baz": 456,
                     "qux": 789,
                 },
+                "quo": "one\ntwo\nthree\nfour",
             },
             paths,
         )
@@ -156,19 +178,19 @@ class TestFuzzyFilter:
                         "baz": 456,
                         "qux": [100, 200, 300],
                     },
+                    "quo": "one\ntwo\nthree\nfour",
                 },
             ),
             # Non-matching
             ("I don't match anything", NoMatch),
             # Matching on keys
             ("foo", {"foo": 123}),
-            ("fo", {"foo": 123}),
             ("oo", {"foo": 123}),
             ("bar baz", {"bar": {"baz": 456}}),
             ("b b", {"bar": {"baz": 456}}),
             # Matching on indices
-            ("[0]", {"bar": {"qux": [100]}}),
-            ("[1]", {"bar": {"qux": [200]}}),
+            ("bar[0]", {"bar": {"qux": [100]}}),
+            ("bar[1]", {"bar": {"qux": [200]}}),
             # Matching on values
             ("123", {"foo": 123}),
             # Matching on keys, values and indices
@@ -177,6 +199,15 @@ class TestFuzzyFilter:
             # Match on path
             ("bar.baz", {"bar": {"baz": 456}}),
             ("bar.qux[1]", {"bar": {"qux": [200]}}),
+            # Match string's key to get whole string
+            ("quo", {"quo": "one\ntwo\nthree\nfour"}),
+            ("quo:=", {"quo": "one\ntwo\nthree\nfour"}),
+            # Match string line numbers
+            ("quo[1]", {"quo": "⋯\ntwo\n⋯\n"}),
+            # Match string contents
+            ("four", {"quo": "⋯\nfour"}),
+            ("ee", {"quo": "⋯\nthree\n⋯\n"}),
+            ("quo t", {"quo": "⋯\ntwo\nthree\n⋯\n"}),
         ],
     )
     def test_filtering(self, search: str, exp: Any) -> None:
@@ -188,6 +219,7 @@ class TestFuzzyFilter:
                         "baz": 456,
                         "qux": [100, 200, 300],
                     },
+                    "quo": "one\ntwo\nthree\nfour",
                 },
                 search,
             )
@@ -199,3 +231,13 @@ class TestFuzzyFilter:
         assert fuzzy_filter({"FoO": 123}, "foo", case_sensitive=False) == {"FoO": 123}
         assert fuzzy_filter({"FoO": 123}, "foo", case_sensitive=True) == NoMatch
         assert fuzzy_filter({"FoO": 123}, "FoO", case_sensitive=True) == {"FoO": 123}
+
+    def test_disable_multiline(self) -> None:
+        assert fuzzy_filter(
+            {
+                "qux": "not me!",
+                "quo": "one\ntwo\nthree\nfour",
+            },
+            "two",
+            split_multiline_strings=False,
+        ) == {"quo": "one\ntwo\nthree\nfour"}

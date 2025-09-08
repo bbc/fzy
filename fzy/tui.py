@@ -120,6 +120,7 @@ def tui(
     raw_input: str,
     initial_search: str = "",
     case_sensitive: bool = False,
+    split_multiline_strings: bool = True,
     exit_on_enter: bool = False,
 ) -> list[Any]:
     """
@@ -129,6 +130,9 @@ def tui(
 
     Returns the YAML subset documents selected when the UI was exited. Returns
     the NoMatch sentinel for documents containing no matching content.
+
+    As a special case, if the search ends with a non-zero number of spaces,
+    split_multiline_strings mode forced to off.
     """
     parsed_input = list(yaml.safe_load_all(raw_input))
 
@@ -150,6 +154,12 @@ def tui(
                     document,
                     new_filter,
                     case_sensitive=case_sensitive,
+                    split_multiline_strings=(
+                        # Special case: when filter ends with a space, force
+                        # multi-line string matching off.
+                        split_multiline_strings
+                        and not new_filter.endswith(" ")
+                    ),
                 )
                 for document in parsed_input
             ]
