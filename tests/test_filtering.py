@@ -128,15 +128,15 @@ def test_filter_matching_paths(paths: set[str], exp: Any) -> None:
         ("", [""]),
         # Single words
         ("foo", ["foo"]),
-        ("192.168.0.1", ["192.168.0.1"]),
         # Space separated words
         ("foo bar", ["foo", "bar"]),
         ("foo  bar", ["foo", "bar"]),
         # Square brackets
         ("foo[123][456]bar", ["foo", "[123]", "[456]", "bar"]),
-        # Colon and equals
+        # Colon, equals and dot
         ("foo=bar", ["foo", "=", "bar"]),
         ("foo:bar", ["foo", ":", "bar"]),
+        ("foo.bar", ["foo", ".", "bar"]),
     ],
 )
 def test_split_search(search: str, exp: list[str]) -> None:
@@ -174,6 +174,9 @@ class TestFuzzyFilter:
             # Matching on keys, values and indices
             ("foo = 123", {"foo": 123}),
             ("bar [0] = 100", {"bar": {"qux": [100]}}),
+            # Match on path
+            ("bar.baz", {"bar": {"baz": 456}}),
+            ("bar.qux[1]", {"bar": {"qux": [200]}}),
         ],
     )
     def test_filtering(self, search: str, exp: Any) -> None:

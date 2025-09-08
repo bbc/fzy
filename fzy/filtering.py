@@ -137,10 +137,10 @@ def split_search(search: str) -> list[str]:
     """
     Split search string into words, each of which will be searched for.
 
-    Specifically, splits on whitespace and also around [nnn] and = and :. This
+    Specifically, splits on whitespace, ":", "=" and "." and also around [nnn]. This
     means you can write ``[0]`` to match the zeroth entry in a list.
     """
-    return re.split(r"\s+|(?=\[)|(?<=\])|(?=[:=])|(?<=[:=])", search)
+    return re.split(r"\s+|(?=\[)|(?<=\])|(?=[:=.])|(?<=[:=.])", search)
 
 
 def fuzzy_filter(obj: Any, search: str, case_sensitive: bool = False) -> Any:
