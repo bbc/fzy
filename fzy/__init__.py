@@ -81,7 +81,7 @@ def main() -> None:
             for document in yaml.safe_load_all(args.yaml.read())
         ]
 
-    if args.print_matched:
+    if args.print_matched or args.non_interactive:
         for i, document in enumerate(matching):
             if i != 0:
                 print("\n---")
