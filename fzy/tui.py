@@ -160,7 +160,9 @@ def tui(
                     new_text.append((Token.Name.Namespace, "\n---\n"))
                 if document is not NoMatch:
                     new_text.extend(
-                        yaml_syntax_highlighting(yaml.dump(document, sort_keys=False))
+                        yaml_syntax_highlighting(
+                            yaml.dump(document, sort_keys=False, allow_unicode=True)
+                        )
                     )
                 else:
                     new_text.append(("dim", "# No matches in this document"))

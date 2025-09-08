@@ -86,6 +86,6 @@ def main() -> None:
             if i != 0:
                 print("\n---")
             if document is not NoMatch:
-                print(yaml.dump(document, sort_keys=False), end="")
+                print(yaml.dump(document, sort_keys=False, allow_unicode=True), end="")
             else:
                 print("# No matches in this document")
